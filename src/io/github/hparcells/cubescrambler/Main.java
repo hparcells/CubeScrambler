@@ -46,7 +46,7 @@ public class Main extends JFrame {
 	
 	public static JTextField scramble = new JTextField();
 	
-	public static JPanel contentPane;
+	public JPanel contentPane;
 	
 	public static void main(String[] args) {
 		//Start
@@ -151,6 +151,7 @@ public class Main extends JFrame {
 			
 			@Override
 			public void focusGained(FocusEvent e) {
+				//Do Nothing
 			}
 		});
 		contentPane.add(optionsCubeBox);
