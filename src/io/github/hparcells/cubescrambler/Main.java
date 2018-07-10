@@ -1,4 +1,4 @@
-package hunter.cubeScrambler;
+package io.github.hparcells.cubescrambler;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -23,29 +23,30 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 public class Main extends JFrame {
-	public static final File file = new File("generatedScrambles.txt");
+	public final static File file = new File("generatedScrambles.txt");
 	public static PrintWriter printWriter = null;
 	
 	private static final long serialVersionUID = 1L;
 	
-	public static int windowWidth = 505;
-	public static int windowHeight = 300;
-	public static int selectedCube;
-	public static int scrambleLength = 25;
+	public final int windowWidth = 505;
+	public final int windowHeight = 300;
+	
+	public int selectedCube;
+	public int scrambleLength = 25;
 	
 	public static final int maxScrambleLength = 25;
 	
 	public static String finalScrambleString;
 	
-	public static final String threeTurns[] = {"U","U'","R","R'","L","L'","D","D'","B","B'","F","F'","U2","R2","L2","D2","F2","B2"};
-	public static final String fourTurns[] = {"U","U'","R","R'","L","L'","D","D'","B","B'","F","F'","U2","R2","L2","D2","F2","B2",
+	public final String threeTurns[] = {"U","U'","R","R'","L","L'","D","D'","B","B'","F","F'","U2","R2","L2","D2","F2","B2"};
+	public final String fourTurns[] = {"U","U'","R","R'","L","L'","D","D'","B","B'","F","F'","U2","R2","L2","D2","F2","B2",
 											  "u","u'","r","r'","l","l'","d","d'","b","b'","f","f'","u2","r2","l2","d2","f2","b2"};
 	
-	ArrayList<String> finalScramble = new ArrayList<String>();
+	public static ArrayList<String> finalScramble = new ArrayList<String>();
 	
 	public static JTextField scramble = new JTextField();
 	
-	JPanel contentPane;
+	public static JPanel contentPane;
 	
 	public static void main(String[] args) {
 		//Start
@@ -127,6 +128,7 @@ public class Main extends JFrame {
 
 			@Override
 			public void focusGained(FocusEvent e) {
+				//Do Nothing
 			}
 		});
 		optionsScrambleLengthBox.setBounds(138, 133, 57, 22);
