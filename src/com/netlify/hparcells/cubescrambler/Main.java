@@ -1,4 +1,4 @@
-package io.github.hparcells.cubescrambler;
+package com.netlify.hparcells.cubescrambler;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
