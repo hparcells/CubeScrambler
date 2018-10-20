@@ -32,15 +32,16 @@ public class Main extends JFrame {
 	public final int windowHeight = 300;
 	
 	public int selectedCube;
-	public int scrambleLength = 25;
+	public String scrambleLength = "25";
 	
 	public static final int maxScrambleLength = 25;
 	
 	public static String finalScrambleString;
 	
-	public final String threeTurns[] = {"U","U'","R","R'","L","L'","D","D'","B","B'","F","F'","U2","R2","L2","D2","F2","B2"};
-	public final String fourTurns[] = {"U","U'","R","R'","L","L'","D","D'","B","B'","F","F'","U2","R2","L2","D2","F2","B2",
-											  "u","u'","r","r'","l","l'","d","d'","b","b'","f","f'","u2","r2","l2","d2","f2","b2"};
+	public final String twoAndThreeTurns[] = {"U","U'","R","R'","L","L'","D","D'","B","B'","F","F'","U2","R2","L2","D2","F2","B2"};
+	public final String fourAndFiveTurns[] = {"U","U'","R","R'","L","L'","D","D'","B","B'","F","F'","U2","R2","L2","D2","F2","B2",
+										"u","u'","r","r'","l","l'","d","d'","b","b'","f","f'","u2","r2","l2","d2","f2","b2"};
+	public final String skewbTurns[] = {"F","R","B","L","F'","R'","B'","L'"};
 	
 	public static ArrayList<String> finalScramble = new ArrayList<String>();
 	
@@ -63,7 +64,7 @@ public class Main extends JFrame {
 		});
 		
 		//End
-		Runtime.getRuntime().addShutdownHook(new Thread() {
+			Runtime.getRuntime().addShutdownHook(new Thread() {
 		    @Override
 		    public void run() {
 		    	if(printWriter != null) {
@@ -123,12 +124,12 @@ public class Main extends JFrame {
 		optionsScrambleLengthBox.addFocusListener(new FocusListener() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				scrambleLength = Integer.parseInt(optionsScrambleLengthBox.getText());
+				scrambleLength = optionsScrambleLengthBox.getText();
 			}
 
 			@Override
 			public void focusGained(FocusEvent e) {
-				//Do Nothing
+				// Do Nothing
 			}
 		});
 		optionsScrambleLengthBox.setBounds(138, 133, 57, 22);
@@ -141,8 +142,11 @@ public class Main extends JFrame {
 		
 		JComboBox<String> optionsCubeBox = new JComboBox<String>();
 		optionsCubeBox.setBounds(70, 158, 89, 22);
+		optionsCubeBox.addItem("2x2");
 		optionsCubeBox.addItem("3x3");
 		optionsCubeBox.addItem("4x4");
+		optionsCubeBox.addItem("5x5");
+		optionsCubeBox.addItem("Skewb");
 		optionsCubeBox.addFocusListener(new FocusListener() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -151,7 +155,7 @@ public class Main extends JFrame {
 			
 			@Override
 			public void focusGained(FocusEvent e) {
-				//Do Nothing
+				// Do Nothing
 			}
 		});
 		contentPane.add(optionsCubeBox);
@@ -161,32 +165,47 @@ public class Main extends JFrame {
 	 * Generates a Scramble
 	 * @param length The length of the scramble you want to generate.
 	 */
-	public void generateScramble(int length) {		
+	public void generateScramble(String length) {		
 		Random random = new Random();
+		int scrambleLength;
 		
-		//Test if Requested Scramble Length is Larger than the Max Scramble Length
-		if(length > maxScrambleLength) {
-			scramble.setText("Scramble Too Large!");
-			return;
-		}else {
-			finalScramble.clear();
-		}
-		
-		//Generate Turns
-		if(selectedCube == 0) {     //3x3x3
-			for(int i=1; i<=length;i++) {
-				int x = random.nextInt(threeTurns.length);
-				finalScramble.add(threeTurns[x]+" ");
+		try {
+			scrambleLength = Integer.parseInt(length);
+			
+			// Test if requested scramble length is larger than the max scramble length.
+			if(scrambleLength > maxScrambleLength) {
+				scramble.setText("Scramble Too Large!");
+				return;
+			}else {
+				finalScramble.clear();
 			}
-		}else if(selectedCube == 1) {     //4x4x4
-			for(int i=1; i<=length;i++) {
-				int x = random.nextInt(fourTurns.length);
-				finalScramble.add(fourTurns[x]+" ");
+			
+			// Generate Turns
+			// 2x2x2 or 3x3x3
+			if(selectedCube == 0 || selectedCube == 1) {
+				for(int i = 1; i <= scrambleLength; i++) {
+					int x = random.nextInt(twoAndThreeTurns.length);
+					finalScramble.add(twoAndThreeTurns[x] + " ");
+				}
+			// 4x4x4 or 5x5x5
+			}else if(selectedCube == 2 || selectedCube == 3) {
+				for(int i = 1; i <= scrambleLength; i++) {
+					int x = random.nextInt(fourAndFiveTurns.length);
+					finalScramble.add(fourAndFiveTurns[x] + " ");
+				}
+			// Skewb
+			}else if(selectedCube == 4) {
+				for(int i = 1; i <= scrambleLength; i++) {
+					int x = random.nextInt(skewbTurns.length);
+					finalScramble.add(skewbTurns[x] + " ");
+				}
 			}
+			
+			scramble.setText(cleanScramble(finalScramble, true));
+			printWriter.println(cleanScramble(finalScramble, false));
+		}catch(NumberFormatException e) {
+			scramble.setText("Scramble Length is Not a Number!");
 		}
-		
-		scramble.setText(cleanScramble(finalScramble, true));
-		printWriter.println(cleanScramble(finalScramble, false));
 	}
 	
 	/**
