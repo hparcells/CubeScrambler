@@ -1,6 +1,6 @@
 # CubeScrambler
 ![status](https://img.shields.io/badge/status-complete-brightgreen.svg)
-![maintained](https://img.shields.io/badge/maintained-yes-brightgreen.svg)
+![maintained](https://img.shields.io/badge/maintained-no%20(as%20of%202018)-red.svg)
 
 [![GitHub issues](https://img.shields.io/github/issues/hparcells/CubeScrambler.svg)](https://github.com/hparcells/CubeScrambler)
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/hparcells/CubeScrambler.svg)](https://github.com/hparcells/CubeScrambler)
